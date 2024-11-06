@@ -1,3 +1,4 @@
+CONSOLE_ENABLE = no
 CONVERT_TO = liatris
 COMMAND_ENABLE = no
 OLED_ENABLE = yes

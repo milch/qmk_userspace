@@ -59,6 +59,7 @@ enum custom_keycodes {
 #define THUMB_ENT LT(NAV, KC_ENTER)
 #define THUMB_REP TD(LT_SYM_REP)
 #define THUMB_AREP TD(LT_SYM_AREP)
+#define THUMB_OSS TD(LT_SYM_OSS)
 
 combo_t key_combos[] = {};
 
@@ -77,6 +78,7 @@ combo_t key_combos[] = {};
 tap_dance_action_t tap_dance_actions[] = {
     [LT_SYM_REP]  = ACTION_TAP_DANCE_LT(SYM, QK_REP),
     [LT_SYM_AREP] = ACTION_TAP_DANCE_LT(SYM, QK_AREP),
+    [LT_SYM_OSS] = ACTION_TAP_DANCE_LT(SYM, OSM(MOD_LSFT)),
 };
 // clang-format on
 
@@ -94,6 +96,7 @@ uint16_t achordion_timeout(uint16_t keycode) {
         case THUMB_SPC:
         case THUMB_REP:
         case THUMB_AREP:
+        case THUMB_OSS:
             return 0;
     }
 
@@ -218,6 +221,7 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_UNDS:
         case THUMB_REP:
         case THUMB_AREP:
+        case THUMB_OSS:
             return true;
 
             // Deactivate Caps Word.
@@ -326,7 +330,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB  , KC_Q   , KC_W , KC_F   , KC_P              , KC_G      ,                             KC_J       , KC_L    , KC_U    , KC_Y   , KC_SCLN   , KC_MINS,
   KC_ESC  , CH_A   , CH_R , CH_S   , CH_T              , KC_D      ,                             KC_H       , CH_N    , CH_E    , CH_I   , CH_O      , KC_QUOT,
   CW_TOGG , HOME_Z , KC_X , KC_C   , KC_V              , KC_B      , KC_LBRC   ,     KC_RBRC   , KC_K       , KC_M    , KC_COMM , KC_DOT , HOME_SLSH , NW_TOGG,
-                            OSM(MOD_LSFT) , LALT(KC_BSPC) , THUMB_REP , THUMB_SPC ,     THUMB_ENT , THUMB_AREP , KC_BSPC , OSM(MOD_RSFT)
+                            QK_REP , LALT(KC_BSPC) , THUMB_OSS , THUMB_SPC ,     THUMB_ENT , THUMB_OSS , KC_BSPC , QK_AREP
 ),
 
 //    ┌─────────┬──────┬─────────────┬──────┬──────┬─────┐                                             ┌──────┬──────┬──────┬──────┬──────┬──────┐

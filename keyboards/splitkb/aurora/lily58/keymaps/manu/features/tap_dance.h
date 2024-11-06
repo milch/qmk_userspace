@@ -4,8 +4,9 @@
 
 // Tap Dance keycodes
 enum td_keycodes {
-    LT_SYM_REP, // MO(SYM) when held, REPEAT when tapped
-    LT_SYM_AREP // MO(SYM) when held, ALTERNATE_REPEAT when tapped
+    LT_SYM_REP,  // MO(SYM) when held, REPEAT when tapped
+    LT_SYM_AREP, // MO(SYM) when held, ALTERNATE_REPEAT when tapped
+    LT_SYM_OSS   // MO(SYM) when held, OSM(LSFT) when tapped
 };
 
 typedef struct {
@@ -25,5 +26,8 @@ void tap_dance_lt_on_each_tap(tap_dance_state_t *state, void *user_data);
 void tap_dance_lt_finished(tap_dance_state_t *state, void *user_data);
 void tap_dance_lt_reset(tap_dance_state_t *state, void *user_data);
 
-#define ACTION_TAP_DANCE_LT(layer, kc) \
-    { .fn = {tap_dance_lt_on_each_tap, tap_dance_lt_finished, tap_dance_lt_reset}, .user_data = (void *)&((tap_dance_lt_t){layer, kc, 0}), }
+#define ACTION_TAP_DANCE_LT(layer, kc)                                                      \
+    {                                                                                       \
+        .fn        = {tap_dance_lt_on_each_tap, tap_dance_lt_finished, tap_dance_lt_reset}, \
+        .user_data = (void *)&((tap_dance_lt_t){layer, kc, 0}),                             \
+    }

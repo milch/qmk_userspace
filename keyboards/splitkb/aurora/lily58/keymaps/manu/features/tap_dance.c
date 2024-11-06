@@ -1,8 +1,11 @@
 #include "tap_dance.h"
 #include "action.h"
 #include "action_layer.h"
+#include "action_util.h"
 #include "debug.h"
+#include "modifiers.h"
 #include "quantum.h"
+#include "quantum_keycodes.h"
 #include "repeat_key.h"
 
 td_state_t cur_dance(tap_dance_state_t *state) {
@@ -34,10 +37,15 @@ void handle_tap(uint16_t keycode) {
             tap_code16(kc);
             break;
         }
-        default: {
-            tap_code16(keycode);
+        case OSM(MOD_LSFT): {
+            dprintf("handling OSM case\n");
+            set_oneshot_mods(MOD_LSFT);
             break;
         }
+        default:
+            dprintf("keycode: %d\n", keycode);
+            tap_code16(keycode);
+            break;
     }
 }
 
@@ -52,13 +60,12 @@ void tap_dance_lt_on_each_tap(tap_dance_state_t *state, void *user_data) {
 
 void send_mo(uint16_t layer, uint16_t count, bool held) {
     keyrecord_t *last_record = get_last_record();
-    keyrecord_t  record      = {
-              .event = last_record->event,
+    keyrecord_t  record      = {.event = last_record->event,
 #ifndef NO_ACTION_TAPPING
-        .tap = {.count = count},
+                          .tap = {.count = count},
 #endif
 #if defined(COMBO_ENABLE) || defined(REPEAT_KEY_ENABLE)
-        .keycode = MO(layer)
+                          .keycode = MO(layer)
 #endif
     };
     record.event.pressed = held;
